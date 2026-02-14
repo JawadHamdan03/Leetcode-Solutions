@@ -4,26 +4,33 @@ using namespace std;
 
 class Solution {
 public:
-    bool hasDuplicate(vector<int>& nums) {
-        set<int> s;
-        for (int num : nums)
+    bool isAnagram(string s, string t) {
+        vector<int> countChars(26,0);
+
+        for (char c : s)
         {
-            if (s.contains(num)) return true;
-            else s.insert(num);
+            countChars[c - 'a']++;
         }
-        return false;
+
+        for (char c : t)
+        {
+            countChars[c - 'a']--;
+        }
+
+        for (int i : countChars)
+            if (i != 0) return false;
+
+        return true;
     }
 };
-
 
 
 
 int main()
 {
 
-    vector<int> in = { 1, 2, 3, 4 };
 
     Solution s;
-    cout << s.hasDuplicate(in);
+    cout << s.isAnagram("jar","jam");
 }
 

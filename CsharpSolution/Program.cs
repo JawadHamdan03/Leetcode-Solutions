@@ -6,24 +6,29 @@ internal class Program
     {
         int[] arr = { 1, 2, 3, 4 };
         Solution s = new Solution();
-        Console.WriteLine(s.hasDuplicate(arr));
+        Console.WriteLine(s.IsAnagram("jam", "jar"));
     }
 }
 
 
-/// <summary>
 
 public class Solution
 {
-    public bool hasDuplicate(int[] nums)
+    public bool IsAnagram(string s, string t)
     {
-        HashSet<int> s= new HashSet<int>();
+        int[] countChars= new int[26];
 
-        foreach(int num in nums)
+        foreach (char c in s)
         {
-            if (s.Contains(num)) return true;
-            else s.Add(num);
+            countChars[c - 'a']++;
         }
-        return false;
+        foreach (char c in t)
+        {
+            countChars[c - 'a']--;
+        }
+        foreach (int i in countChars)
+            if (i != 0) return false;        
+
+        return true;
     }
 }
