@@ -4,33 +4,45 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target)
-    {
-        map<int, int> mp;
-
-        for (int i = 0; i < nums.size(); i++)
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        map <string, vector<string>> mp;
+        for(string str : strs )
         {
-            if (mp.contains(target - nums[i]))
-                return {mp[target - nums[i]] ,i};
-            else mp[nums[i]]=i;
+            string temp = "" + str;
+            sort(temp.begin(),temp.end());
+            if(mp.contains(temp))mp[temp].push_back(str);
+            else mp[temp]={str};
         }
-        return {};
+
+        vector<vector<string>> ans;
+        for(auto it : mp)
+        {
+            ans.push_back(it.second);
+        }
+        return ans;
     }
 };
 
 
 
 
-void printVector(vector<int> arr)
+void printVector(vector<string> arr)
 {
-    for (int i : arr) cout << i << " ";
+    for (auto i : arr) cout << i << " ";
 }
 
 int main()
 {
-    vector<int> in = { 4,5,6 };
+    vector<string> in = { "act","pots","tops","cat","stop","hat" };
 
     Solution s;
-    printVector(s.twoSum(in, 10));
+    auto res =s.groupAnagrams(in);
+    for (auto i : res) 
+    {
+        printVector(i);
+        cout << '\n';
+    }
+        
+
 }
 

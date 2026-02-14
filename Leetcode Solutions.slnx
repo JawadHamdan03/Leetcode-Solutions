@@ -4,6 +4,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="CppSolution/CppSolution.vcxproj" />
+  <Project Path="CppSolution/CppSolution.vcxproj" Id="ca26428f-ee02-42e8-90a5-7ce04d29267f" />
   <Project Path="CsharpSolution/CsharpSolution.csproj" />
 </Solution>

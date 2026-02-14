@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    static void printArr(int[]arr)
+    static void printArr(string[]arr)
     {
         foreach (var item in arr)
         {
@@ -11,9 +11,11 @@ internal class Program
     }
     static void Main(string[] args)
     {
-        int[] arr = { 3, 4, 5, 6 };
+        string[] arr = { "act", "pots", "tops", "cat", "stop", "hat" };
         Solution s = new Solution();
-        printArr(s.TwoSum(arr, 7));
+        var res = s.GroupAnagrams(arr);
+        
+        
     }
 }
 
@@ -21,16 +23,29 @@ internal class Program
 
 public class Solution
 {
-    public int[] TwoSum(int[] nums, int target)
+    public List<List<string>> GroupAnagrams(string[] strs)
     {
-
-        Dictionary<int, int> map= new Dictionary<int, int>();
-
-        for (int i = 0; i < nums.Length; i++)
+        Dictionary<string,List<string>> mp = new Dictionary<string, List<string>>();
+        foreach (var str in strs)
         {
-            if (map.ContainsKey(target - nums[i])) return new int[] { map[target - nums[i]],i };
-            map[nums[i]] = i;
+
+            char[] chars = str.ToCharArray();
+            Array.Sort(chars);
+            string temp= new string(chars);
+
+            if (mp.ContainsKey(temp))
+            {
+                mp[temp].Add(str);
+            }
+            else mp[temp] = new List<string>() { str};
         }
-        return new int[] { };
+
+        List<List<string>> res= new List<List<string>>();
+        foreach (var it in mp)
+        {
+            res.Add(it.Value);
+        }
+        return res;
     }
 }
+
