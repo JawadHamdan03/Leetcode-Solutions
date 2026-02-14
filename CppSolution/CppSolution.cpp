@@ -4,33 +4,33 @@ using namespace std;
 
 class Solution {
 public:
-    bool isAnagram(string s, string t) {
-        vector<int> countChars(26,0);
+    vector<int> twoSum(vector<int>& nums, int target)
+    {
+        map<int, int> mp;
 
-        for (char c : s)
+        for (int i = 0; i < nums.size(); i++)
         {
-            countChars[c - 'a']++;
+            if (mp.contains(target - nums[i]))
+                return {mp[target - nums[i]] ,i};
+            else mp[nums[i]]=i;
         }
-
-        for (char c : t)
-        {
-            countChars[c - 'a']--;
-        }
-
-        for (int i : countChars)
-            if (i != 0) return false;
-
-        return true;
+        return {};
     }
 };
 
 
 
+
+void printVector(vector<int> arr)
+{
+    for (int i : arr) cout << i << " ";
+}
+
 int main()
 {
-
+    vector<int> in = { 4,5,6 };
 
     Solution s;
-    cout << s.isAnagram("jar","jam");
+    printVector(s.twoSum(in, 10));
 }
 

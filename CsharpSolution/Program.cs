@@ -2,11 +2,18 @@
 
 internal class Program
 {
+    static void printArr(int[]arr)
+    {
+        foreach (var item in arr)
+        {
+            Console.Write(item+" ");
+        }
+    }
     static void Main(string[] args)
     {
-        int[] arr = { 1, 2, 3, 4 };
+        int[] arr = { 3, 4, 5, 6 };
         Solution s = new Solution();
-        Console.WriteLine(s.IsAnagram("jam", "jar"));
+        printArr(s.TwoSum(arr, 7));
     }
 }
 
@@ -14,21 +21,16 @@ internal class Program
 
 public class Solution
 {
-    public bool IsAnagram(string s, string t)
+    public int[] TwoSum(int[] nums, int target)
     {
-        int[] countChars= new int[26];
 
-        foreach (char c in s)
-        {
-            countChars[c - 'a']++;
-        }
-        foreach (char c in t)
-        {
-            countChars[c - 'a']--;
-        }
-        foreach (int i in countChars)
-            if (i != 0) return false;        
+        Dictionary<int, int> map= new Dictionary<int, int>();
 
-        return true;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (map.ContainsKey(target - nums[i])) return new int[] { map[target - nums[i]],i };
+            map[nums[i]] = i;
+        }
+        return new int[] { };
     }
 }
