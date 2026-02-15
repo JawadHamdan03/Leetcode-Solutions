@@ -4,44 +4,46 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        map <string, vector<string>> mp;
-        for(string str : strs )
+    vector<int> topKFrequent(vector<int>& nums, int k)
+    {
+        map<int, int> mp;
+        for (int num : nums)
         {
-            string temp = "" + str;
-            sort(temp.begin(),temp.end());
-            if(mp.contains(temp))mp[temp].push_back(str);
-            else mp[temp]={str};
+            if (mp.contains(num)) mp[num]++;
+            else mp[num] = 1;
+        }
+        vector<pair<int, int>> temp;
+        for (auto it : mp)
+        {
+            temp.push_back(it);
         }
 
-        vector<vector<string>> ans;
-        for(auto it : mp)
+        sort(temp.begin(), temp.end(), [](pair<int, int> a, pair<int, int> b) {return a.second > b.second; });
+        vector<int> res;
+        for (int i = 0; i < k; i++)
         {
-            ans.push_back(it.second);
+            res.push_back(temp[i].first);
         }
-        return ans;
+        return res;
     }
 };
 
 
 
 
-void printVector(vector<string> arr)
+
+void printVector(vector<int> arr)
 {
     for (auto i : arr) cout << i << " ";
 }
 
 int main()
 {
-    vector<string> in = { "act","pots","tops","cat","stop","hat" };
+    vector<int> in = { 1,2,2,3,3,3 };
 
     Solution s;
-    auto res =s.groupAnagrams(in);
-    for (auto i : res) 
-    {
-        printVector(i);
-        cout << '\n';
-    }
+    auto res =s.topKFrequent(in,2);
+    printVector(res);
         
 
 }

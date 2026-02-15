@@ -1,51 +1,42 @@
-﻿namespace CsharpSolution;
-
-internal class Program
-{
-    static void printArr(string[]arr)
+﻿
+Solution s = new Solution();
+var printArr = (int[] arr) => {
+    foreach (var item in arr)
     {
-        foreach (var item in arr)
-        {
-            Console.Write(item+" ");
-        }
+        Console.Write(item + " ");
     }
-    static void Main(string[] args)
-    {
-        string[] arr = { "act", "pots", "tops", "cat", "stop", "hat" };
-        Solution s = new Solution();
-        var res = s.GroupAnagrams(arr);
-        
-        
-    }
-}
+};
 
+int[] arr = { 1, 2, 2, 3, 3, 3 };
+var res = s.TopKFrequent(arr, 2);
+
+printArr(res);
 
 
 public class Solution
 {
-    public List<List<string>> GroupAnagrams(string[] strs)
+    public int[] TopKFrequent(int[] nums, int k)
     {
-        Dictionary<string,List<string>> mp = new Dictionary<string, List<string>>();
-        foreach (var str in strs)
+        Dictionary<int, int> mp = new Dictionary<int, int>();
+
+        foreach (int num in nums)
         {
-
-            char[] chars = str.ToCharArray();
-            Array.Sort(chars);
-            string temp= new string(chars);
-
-            if (mp.ContainsKey(temp))
-            {
-                mp[temp].Add(str);
-            }
-            else mp[temp] = new List<string>() { str};
+            if (mp.ContainsKey(num)) mp[num]++;
+            else mp[num] = 1;
         }
 
-        List<List<string>> res= new List<List<string>>();
+        List<KeyValuePair<int, int>> temp= new List<KeyValuePair<int, int>>();
         foreach (var it in mp)
+            temp.Add(it);
+
+        temp.Sort((KeyValuePair<int, int> a, KeyValuePair<int, int> b) => b.Value.CompareTo(a.Value));
+        List<int> res = new List<int>();
+
+        for(int i =0; i < k; i++)
         {
-            res.Add(it.Value);
+            res.Add(temp[i].Key);
         }
-        return res;
+
+        return res.ToArray();
     }
 }
-
