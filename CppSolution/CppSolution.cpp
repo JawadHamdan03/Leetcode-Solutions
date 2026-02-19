@@ -4,34 +4,41 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> pref(nums.size() + 1, 1);
-        vector<int> post(nums.size() + 1, 1);
-        vector<int> res(nums.size(), 1);
+    bool isValidSudoku(vector<vector<char>>& board) {
+        set<char> rows[9], cols[9], boxes[9];
 
-        for (int i = 1; i < pref.size(); i++)
-            pref[i] = pref[i - 1] * nums[i - 1];
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                char c = board[i][j];
+                if (c == '.') continue;
 
-        for (int i = post.size()-2; i >=0; i--)
-            post[i] = post[i + 1] * nums[i];
+                if (rows[i].contains(c)) return false;
+                rows[i].insert(c);
 
-        for (size_t i = 0; i < res.size(); i++)
-            res[i] = pref[i] * post[i + 1];
-       
+                if (cols[j].contains(c)) return false;
+                cols[j].insert(c);
 
-        return res;
-
+                int idx = (i / 3) * 3 + (j / 3);
+                if (boxes[idx].contains(c)) return false;
+                boxes[idx].insert(c);
+            }
+        }
+        return true;
     }
 };
 
 
-
 int main()
 {
-    vector<int> arr = { 1,2,3,4 };
+    {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    }
+
+
+   /* vector<int> arr = { 1,2,3,4 };
     Solution s;
-    auto res = s.productExceptSelf(arr);
     
-    for (int i : res) cout << i << " ";
+    for (int i : res) cout << i << " ";*/
 }
 
