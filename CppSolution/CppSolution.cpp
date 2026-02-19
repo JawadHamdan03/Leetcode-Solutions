@@ -4,26 +4,33 @@ using namespace std;
 
 class Solution {
 public:
-    bool isValidSudoku(vector<vector<char>>& board) {
-        set<char> rows[9], cols[9], boxes[9];
+    int longestConsecutive(vector<int>& nums)
+    {
+        if (nums.empty()) return 0;
+        set<int> st;
+        for (int num : nums)
+            st.insert(num);
 
-        for (int i = 0; i < 9; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                char c = board[i][j];
-                if (c == '.') continue;
+        vector<int> temp;
+        for (auto it : st)
+            temp.push_back(it);
 
-                if (rows[i].contains(c)) return false;
-                rows[i].insert(c);
 
-                if (cols[j].contains(c)) return false;
-                cols[j].insert(c);
+        int count = 1;
+        int maxCount = count;
 
-                int idx = (i / 3) * 3 + (j / 3);
-                if (boxes[idx].contains(c)) return false;
-                boxes[idx].insert(c);
+        for (int i = 1; i < temp.size(); i++)
+        {
+            if (temp[i]  == temp[i - 1]+ 1)
+            {
+                count++;
+                maxCount = max(maxCount, count);
             }
+            else count = 1;
         }
-        return true;
+
+        return maxCount;
+
     }
 };
 
@@ -36,9 +43,10 @@ int main()
     }
 
 
-   /* vector<int> arr = { 1,2,3,4 };
+    vector<int> arr = { 0,3,2,5,4,6,1,1 };
     Solution s;
-    
-    for (int i : res) cout << i << " ";*/
+    cout << s.longestConsecutive(arr);
+
+   // for (int i : res) cout << i << " ";
 }
 
