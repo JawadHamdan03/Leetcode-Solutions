@@ -4,32 +4,23 @@ using namespace std;
 
 class Solution {
 public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> pref(nums.size() + 1, 1);
+        vector<int> post(nums.size() + 1, 1);
+        vector<int> res(nums.size(), 1);
 
-    string encode(vector<string>& strs) {
-        string res = "";
-        for (string str : strs)
-        {
-            res += str + '.';
-        }
-        return res;
-    }
+        for (int i = 1; i < pref.size(); i++)
+            pref[i] = pref[i - 1] * nums[i - 1];
 
-    vector<string> decode(string s) {
-        vector<string> res;
-        string temp = "";
-        for (char c : s)
-        {
-            if (c == '.') 
-            {
-                res.push_back(temp);
-                temp = "";
-            }
-            else
-            {
-                temp += c;
-            }       
-        }
+        for (int i = post.size()-2; i >=0; i--)
+            post[i] = post[i + 1] * nums[i];
+
+        for (size_t i = 0; i < res.size(); i++)
+            res[i] = pref[i] * post[i + 1];
+       
+
         return res;
+
     }
 };
 
@@ -37,9 +28,10 @@ public:
 
 int main()
 {
-  
+    vector<int> arr = { 1,2,3,4 };
     Solution s;
+    auto res = s.productExceptSelf(arr);
     
-
+    for (int i : res) cout << i << " ";
 }
 
